@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@irori/idbfs": "^0.1.0",
+    "@types/gtag.js": "^0.0.14",
     "js-fatfs": "^0.0.0",
     "np2-wasm": "^0.1.0"
   },

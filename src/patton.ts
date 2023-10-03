@@ -59,6 +59,8 @@ class App {
         this.np2.addDiskImage(imageName, image);
         this.np2.setHdd(0, imageName);
         this.np2.run();
+        const GameTitle = 'にせなぐりまくりたわあ';
+        gtag('event', 'GameStart', { GameTitle, event_category: 'Game', event_label: GameTitle });
     }
 
     private idbSyncTimer = 0;
@@ -70,7 +72,39 @@ class App {
     }
 }
 
+function gaException(description: any, fatal: boolean = false) {
+    let jsonDescription = JSON.stringify(description, (_, value) => {
+        if (value instanceof DOMException) {
+            return {DOMException: value.name, message: value.message};
+        }
+        return value;
+    });
+    gtag('event', 'exception', { description: jsonDescription, fatal });
+}
+
+window.onerror = (message, url, line, column, error) => {
+    gaException({type: 'onerror', message, url, line, column}, true);
+    window.onerror = null;
+};
+window.addEventListener('unhandledrejection', (evt: any) => {
+    const reason = evt.reason;
+    console.log(reason);
+    if (reason instanceof Error) {
+        let {name, message, stack} = reason;
+        gaException({type: 'rejection', name, message, stack}, true);
+    } else {
+        gaException({type: 'rejection', name: reason.constructor.name, reason}, true);
+    }
+});
+
 zoom.initialize();
-new App().main().catch(() => {
+new App().main().catch((err) => {
+    console.log(err);
+    if (err instanceof Error) {
+        let {name, message, stack} = err;
+        gaException({type: 'rejection', name, message, stack}, true);
+    } else {
+        gaException({type: 'rejection', name: err.constructor.name, err}, true);
+    }
     location.href = '/';
 });
