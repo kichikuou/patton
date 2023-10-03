@@ -1,0 +1,5 @@
+SWITCHES = /F
+BUFFERS  = 8
+FILES    = 8
+DEVICE   = FDXMS286.SYS
+DOS      = high

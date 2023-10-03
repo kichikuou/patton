@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "noEmit": true,
+        "strict": true,
+        "moduleResolution": "Bundler",
+        "isolatedModules": true,
+        "esModuleInterop": true
+    },
+    "files": [
+        "patton.ts"
+    ]
+}

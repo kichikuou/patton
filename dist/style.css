@@ -1,0 +1,52 @@
+body {
+    background-color: black;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-height: initial;
+    display: flex;
+    flex-direction: column;
+}
+
+.contents {
+    flex: 1;
+    display: flex;
+}
+
+#np2 {
+    margin: auto;
+}
+
+#np2.fit {
+    margin: 0;
+    flex: 1;
+}
+
+/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+canvas.emscripten {
+    border: 0px none;
+}
+
+#np2.fit.pillarbox {
+    & canvas.emscripten {
+        height: 100%;
+        max-height: 100vh;
+        margin: auto;
+        display: block;
+    }
+}
+#np2.fit.letterbox {
+    display: flex;
+    align-items: center;
+
+    & canvas.emscripten {
+        width: 100%;
+    }
+}
+
+.pixelated {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+}

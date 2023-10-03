@@ -1,0 +1,18 @@
+{
+  "author": "kichikuou <KichikuouChrome@gmail.com>",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@irori/idbfs": "^0.1.0",
+    "js-fatfs": "^0.0.0",
+    "np2-wasm": "^0.1.0"
+  },
+  "description": "",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.4"
+  }
+}
