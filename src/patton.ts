@@ -3,7 +3,7 @@ import createFsModule, { IDBFSModule } from '@irori/idbfs';
 import { buildHDImage } from './image-builder.js';
 import * as zoom from './zoom.js';
 
-const $: (selector: string) => HTMLElement = document.querySelector.bind(document);
+const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 
 const imageName = 'patton.nhd';
 
@@ -46,9 +46,10 @@ class App {
     private imageMan = new ImageManager();
 
     async main() {
+        this.drawInitialContent();
         const image = await this.imageMan.loadOrBuild();
         this.np2 = await NP2.create({
-            canvas: $('#canvas') as HTMLCanvasElement,
+            canvas,
             clk_mult: 8,
             ExMemory: 1,
             Latencys: 120,
@@ -61,6 +62,16 @@ class App {
         this.np2.run();
         const GameTitle = 'にせなぐりまくりたわあ';
         gtag('event', 'GameStart', { GameTitle, event_category: 'Game', event_label: GameTitle });
+    }
+
+    private drawInitialContent() {
+        canvas.width = 640;
+        canvas.height = 400;
+        const ctx = canvas.getContext('2d')!;
+        const fontSize = 12;
+        ctx.font = `${fontSize}px Arial`;
+        ctx.fillStyle = 'white';
+        ctx.fillText('Loading...', 0, fontSize);
     }
 
     private idbSyncTimer = 0;
