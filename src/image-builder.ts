@@ -152,7 +152,7 @@ function writeFile(ff: FatFs.FatFs, path: string, contents: Uint8Array) {
 }
 
 export async function buildHDImage(idbfs: IDBFSModule) {
-    const baseImage = await fetch('12mb.nhd');
+    const baseImage = await fetch('12mb.nhd.bmp');
     const nhd = new NHD(await baseImage.arrayBuffer());
     const ff = await FatFs.create({ diskio: nhd });
     check_result(ff.f_setcp(932));

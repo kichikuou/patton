@@ -1,3 +1,4 @@
 node_modules/
 dist/patton.js*
+dist/*.nhd.bmp
 dist/lib/
