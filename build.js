@@ -37,6 +37,10 @@ const configs = [
     {
         entryPoints: ['src/patton.ts'],
         plugins: [resolveExternalModules],
+        loader: {
+            '.BAT': 'binary',
+            '.SYS': 'binary',
+        },
         bundle: true,
         minify: true,
         format: 'esm',

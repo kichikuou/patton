@@ -1,5 +1,8 @@
+/// <reference types="../assets/assets.d.ts" />
 import { IDBFSModule } from '@irori/idbfs';
 import * as FatFs from 'js-fatfs';
+import config_sys from '../assets/CONFIG.SYS';
+import autoexec_bat from '../assets/AUTOEXEC.BAT';
 
 class HDImage implements FatFs.DiskIO {
 	private partInfo: PARTINFO;
@@ -163,10 +166,8 @@ export async function buildHDImage(idbfs: IDBFSModule) {
         writeFile(ff, fname, idbfs.FS.readFile(path));
         idbfs.FS.unlink(path);
     }
-    for (const fname of ['CONFIG.SYS', 'AUTOEXEC.BAT']) {
-        const content = new Uint8Array(await (await fetch(fname)).arrayBuffer());
-        writeFile(ff, fname, content);
-    }
+    writeFile(ff, 'CONFIG.SYS', config_sys);
+    writeFile(ff, 'AUTOEXEC.BAT', autoexec_bat);
     check_result(ff.f_unmount(''));
     return nhd.image;
 }
