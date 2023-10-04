@@ -30,6 +30,14 @@ canvas.emscripten {
     border: 0px none;
 }
 
+canvas.emscripten.loading {
+    display: none !important;
+}
+
+#loading.loaded {
+    display: none;
+}
+
 #np2.fit.pillarbox {
     & canvas.emscripten {
         height: 100%;
