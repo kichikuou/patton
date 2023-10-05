@@ -24,7 +24,6 @@ async function installExternalModules() {
     return Promise.all([
         fsPromises.copyFile('node_modules/np2-wasm/dist/np2-wasm.js', 'dist/lib/np2-wasm.js'),
         fsPromises.copyFile('node_modules/np2-wasm/dist/np2.js', 'dist/lib/np2.js'),
-        fsPromises.copyFile('node_modules/np2-wasm/dist/np21.js', 'dist/lib/np21.js'),
         fsPromises.copyFile('node_modules/np2-wasm/dist/np2.wasm', 'dist/lib/np2.wasm'),
         fsPromises.copyFile('node_modules/np2-wasm/dist/font.bmp', 'dist/lib/font.bmp'),
         fsPromises.copyFile('node_modules/js-fatfs/dist/fatfs.js', 'dist/lib/fatfs.js'),
