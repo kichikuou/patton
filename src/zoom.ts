@@ -30,16 +30,12 @@ function recalcAspectRatio() {
 }
 
 // Apply the zoom and pixelate configs of Kichikuou on Web.
-export function initialize() {
-    const json = localStorage.getItem('KichikuouWeb.Config');
-    if (!json) return {};
-    const config = json ? JSON.parse(json) : {};
-
+export function initialize(config: { zoom?: string, pixelate?: boolean }) {
     if (config.pixelate) {
         canvas.classList.add('pixelated');
     }
 
-    if (config.zoom === 'fit') {
+    if (!config.zoom || config.zoom === 'fit') {
         $('#np2').classList.add('fit');
         canvas.style.width = '';
     } else {

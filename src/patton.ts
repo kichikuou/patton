@@ -42,9 +42,19 @@ class ImageManager {
     }
 }
 
+type Config = { zoom?: string, pixelate?: boolean, unloadConfirmation?: boolean };
+
 class App {
     private np2!: NP2;
     private imageMan = new ImageManager();
+    private config: Config = {};
+
+    constructor() {
+        const json = localStorage.getItem('KichikuouWeb.Config');
+        if (json) {
+            this.config = JSON.parse(json);
+        }
+    }
 
     async main() {
         const imagePromise = this.imageMan.loadOrBuild();
@@ -55,14 +65,20 @@ class App {
             Latencys: 120,
             use_menu: false,
             onDiskChange: this.onDiskChange.bind(this),
-            onExit: () => history.back(),
+            onExit: () => {
+                window.onbeforeunload = null;
+                history.back();
+            },
         });
         this.np2.addDiskImage(imageName, await imagePromise);
         this.np2.setHdd(0, imageName);
         this.np2.run();
+
         $('#loading').classList.add('loaded');
         $('#canvas').classList.remove('loading');
-        zoom.initialize();
+        zoom.initialize(this.config);
+        window.onbeforeunload = this.onBeforeUnload.bind(this);
+
         const GameTitle = 'にせなぐりまくりたわあ';
         gtag('event', 'GameStart', { GameTitle, event_category: 'Game', event_label: GameTitle });
     }
@@ -73,6 +89,16 @@ class App {
         this.idbSyncTimer = window.setTimeout(() => {
             this.imageMan.persist(this.np2.getDiskImage(imageName));
         }, 100);
+    }
+
+    private onBeforeUnload(e: BeforeUnloadEvent) {
+        if (!this.config.unloadConfirmation) return;
+        e.returnValue = 'Unsaved data will be lost.';
+        // HACK: Suspend the audio by accessing SDL2's internal structure directly
+        // because calling SDL_PauseAudio(1) here is too late.
+        const audioContext: AudioContext = (this.np2 as any).module.SDL2.audioContext;
+        audioContext.suspend();
+        setTimeout(() => audioContext.resume(), 0);
     }
 }
 
