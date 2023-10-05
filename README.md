@@ -11,7 +11,7 @@ Windows移植版が存在せず、鬼畜王 on Webでも動作しなかったた
 YAKATA3_98.ZIP を[鬼畜王 on Web](https://kichikuou.github.io/web/)にドラッグ＆ドロップしてください。
 『ALICEの館3』が起動しますので、ゲーム選択から『にせなぐりまくりたわあ』を選んでください。
 
-## 技術的詳細
+## 技術情報
 
 『ALICEの館3』はオリジナルのPC-98版においても2つのプログラムに分かれており、『にせなぐりまくりたわあ』だけは
 （闘神都市2ベースの?）専用プログラムで実行されていました。ゲーム選択で『にせなぐりまくりたわあ』が選ばれると、
@@ -28,6 +28,7 @@ PC-98のハードディスクイメージを構築します。
 『ALICEの館3』にはオペレーティングシステムが含まれていないため、PC-98で動作するMS-DOS互換のOSが必要です。
 ここで使っている[ハードディスクのベースイメージ](dist/12mb.nhd)には、
 [FreeDOS(98)のDBCS対応版](http://bauxite.sakura.ne.jp/software/dos/freedos.htm)がインストールされています。
+[assets/README.md](assets/README.md)も参照してください。
 
 ハードディスクイメージにゲームファイルをコピーしたら、PC-98エミュレータ[Neko Project II](https://www.yui.ne.jp/np2/)の
 [ブラウザ移植版](https://github.com/irori/np2-wasm)を使ってゲームを起動します。
