@@ -11,7 +11,11 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-KPPEHCDMLR', location.host.startsWith('localhost:') ? { debug_mode:true } : undefined);
+      if (location.host.startsWith('localhost:')) {
+        gtag('config', 'G-KPPEHCDMLR', { debug_mode:true });
+      } else {
+        gtag('config', 'G-KPPEHCDMLR');
+      }
     </script>
   </head>
   <body>
