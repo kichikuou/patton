@@ -1,5 +1,5 @@
 /// <reference types="../assets/assets.d.ts" />
-import { IDBFSModule } from '@irori/idbfs';
+import { MainModule as IDBFSModule } from '@irori/idbfs';
 import * as FatFs from 'js-fatfs';
 import config_sys from '../assets/CONFIG.SYS';
 import autoexec_bat from '../assets/AUTOEXEC.BAT';
@@ -154,13 +154,12 @@ function writeFile(ff: FatFs.FatFs, path: string, contents: Uint8Array) {
 export async function buildHDImage(idbfs: IDBFSModule) {
     const baseImage = await fetch('12mb.nhd.bmp');
     const nhd = new NHD(await baseImage.arrayBuffer());
-    const ff = await FatFs.create({ diskio: nhd });
-    check_result(ff.f_setcp(932));
+    const ff = await FatFs.create({ diskio: nhd, codepage: 932 });
     check_result(ff.f_mount(ff.malloc(FatFs.sizeof_FATFS), '', 1));
 
     for (const fname of idbfs.FS.readdir('/patton') as string[]) {
         const path = '/patton/' + fname;
-        if (idbfs.FS.isDir(idbfs.FS.stat(path).mode)) {
+        if (idbfs.FS.isDir(idbfs.FS.stat(path, undefined).mode)) {
             continue;
         }
         writeFile(ff, fname, idbfs.FS.readFile(path));

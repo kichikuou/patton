@@ -1,5 +1,5 @@
 import { NP2 } from 'np2-wasm';
-import createFsModule, { IDBFSModule } from '@irori/idbfs';
+import createFsModule, { MainModule as IDBFSModule } from '@irori/idbfs';
 import { buildHDImage } from './image-builder.js';
 import * as zoom from './zoom.js';
 
@@ -22,7 +22,7 @@ class ImageManager {
 
     async loadOrBuild(): Promise<Uint8Array> {
         this.idbfs = await createFsModule();
-        this.idbfs.FS.mkdir('/patton');
+        this.idbfs.FS.mkdir('/patton', undefined);
         this.idbfs.FS.mount(this.idbfs.IDBFS, {}, '/patton');
         await this.syncfs(true);
 
